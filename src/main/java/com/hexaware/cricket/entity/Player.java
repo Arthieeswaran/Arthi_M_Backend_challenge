@@ -6,6 +6,7 @@ import lombok.*;
 @Table(name="players")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 
 public class Player {
@@ -34,9 +35,9 @@ public class Player {
 	@NotBlank(message = "Team name is required")
     @Column(nullable = false)
 	private String teamName;
-	@NotBlank(message = "Country/State name is required")
+	@NotBlank(message = "State name is required")
     @Column(nullable = false)
-	private String countryStateName;
+	private String stateName;
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	

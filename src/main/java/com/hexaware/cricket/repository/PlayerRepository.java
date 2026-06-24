@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 @Repository
 
 public interface PlayerRepository extends JpaRepository<Player,Long> {
@@ -11,5 +13,7 @@ public interface PlayerRepository extends JpaRepository<Player,Long> {
 	List<Player> findByRole(String Role);
 	boolean existsByJerseyNumber(Integer jerseyNumber);
 	Optional<Player> findByJerseyNumber(Integer jerseyNumber);
+	@Query("SELECT p FROM Player p WHERE p.stateName = :stateName")
+	List<Player> findByStateName(@Param("stateName") String stateName);
 	
 }

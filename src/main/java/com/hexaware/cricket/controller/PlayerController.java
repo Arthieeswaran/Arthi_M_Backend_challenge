@@ -46,4 +46,11 @@ public class PlayerController {
 	     playerService.deletePlayer(playerId);
 	     return ResponseEntity.noContent().build();  // Returns 204 No Content
 	 }	 
+	 @GetMapping("/state/{stateName}")
+	 public ResponseEntity<List<PlayerResponseDTO>> getPlayersByStateName(
+	         @PathVariable String stateName) {
+	     log.info("GET /api/players/state/{} called", stateName);
+	     List<PlayerResponseDTO> players = playerService.getPlayersByStateName(stateName);
+	     return ResponseEntity.ok(players);
+	 }
 }

@@ -12,6 +12,6 @@ public class PlayerResponseDTO {
 	private String role;
 	private Integer totalMatches;
 	private String teamName;
-	private String countryStateName;
+	private String stateName;
 	private String description;
 }

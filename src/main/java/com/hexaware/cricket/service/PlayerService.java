@@ -9,4 +9,5 @@ public interface PlayerService {
 	PlayerResponseDTO createPlayer(PlayerRequestDTO requestDTO);
 	PlayerResponseDTO updatePlayer(Long playerId,PlayerRequestDTO requestDTO);
 	void deletePlayer(Long playerId);
+	List<PlayerResponseDTO> getPlayersByStateName(String stateName);
 }

@@ -32,8 +32,19 @@ public class PlayerServiceImpl implements PlayerService {
 		log.info("Creating new player: {}",requestDTO.getPlayerName());
 		Player player=mapToEntity(requestDTO);
 		Player savedPlayer=playerRepository.save(player);
-		log.info("Player created successfully with ID: {}", savedPlayer.getPlayerId());
+		log.info("Player created successfully with ID: {}", savedPlayer.getPlayeId());
         return mapToResponseDTO(savedPlayer);
+	}
+	@Override
+	public List<PlayerResponseDTO> getPlayersByStateName(String stateName) {
+	    log.info("Fetching players by state: {}", stateName);
+	    List<Player> players = playerRepository.findByStateName(stateName);
+	    if (players.isEmpty()) {
+	        throw new PlayerNotFoundException("No players found for state: " + stateName);
+	    }
+	    return players.stream()
+	            .map(this::mapToResponseDTO)
+	            .collect(Collectors.toList());
 	}
 	@Override
     public PlayerResponseDTO updatePlayer(Long playerId, PlayerRequestDTO requestDTO) {
@@ -45,10 +56,10 @@ public class PlayerServiceImpl implements PlayerService {
         existingPlayer.setRole(requestDTO.getRole());
         existingPlayer.setTotalMatches(requestDTO.getTotalMatches());
         existingPlayer.setTeamName(requestDTO.getTeamName());
-        existingPlayer.setCountryStateName(requestDTO.getCountryStateName());
+        existingPlayer.setStateName(requestDTO.getStateName());
         existingPlayer.setDescription(requestDTO.getDescription());
         Player updatedPlayer = playerRepository.save(existingPlayer);
-        log.info("Player updated successfully with ID: {}", updatedPlayer.getPlayerId());
+        log.info("Player updated successfully with ID: {}", updatedPlayer.getPlayeId());
         return mapToResponseDTO(updatedPlayer);
     }
 	@Override
@@ -60,13 +71,13 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 	private PlayerResponseDTO mapToResponseDTO(Player player) {
         return PlayerResponseDTO.builder()
-                .playerId(player.getPlayerId())
+                .playerId(player.getPlayeId())
                 .playerName(player.getPlayerName())
                 .jerseyNumber(player.getJerseyNumber())
                 .role(player.getRole())
                 .totalMatches(player.getTotalMatches())
                 .teamName(player.getTeamName())
-                .countryStateName(player.getCountryStateName())
+                .stateName(player.getStateName())
                 .description(player.getDescription())
                 .build();
     }
@@ -77,7 +88,7 @@ public class PlayerServiceImpl implements PlayerService {
                 .role(dto.getRole())
                 .totalMatches(dto.getTotalMatches() != null ? dto.getTotalMatches() : 0)
                 .teamName(dto.getTeamName())
-                .countryStateName(dto.getCountryStateName())
+                .stateName(dto.getStateName())
                 .description(dto.getDescription())
                 .build();
     }

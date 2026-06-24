@@ -24,7 +24,7 @@ public class PlayerRequestDTO {
     private Integer totalMatches;
     @NotBlank(message = "Team name is required")
     private String teamName;
-    @NotBlank(message = "Country/State name is required")
-	private String countryStateName;
+    @NotBlank(message = "State name is required")
+	private String stateName;
     private String description;
 }
